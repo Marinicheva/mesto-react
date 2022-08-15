@@ -1,4 +1,4 @@
-.profile__photo-container {
+.profile__avatar-container {
   grid-area: photo;
   position: relative;
   margin-right: 30px;
@@ -9,7 +9,7 @@
   cursor: pointer;
 }
 
-.profile__photo-container:after {
+.profile__avatar-container:after {
   content: "";
   position: absolute;
   top: 0;
@@ -20,6 +20,6 @@
   transition: background-color .6s;
 }
 
-.profile__photo-container:hover:after {
+.profile__avatar-container:hover:after {
   background-color: rgba(0,0,0,0.8);
 }

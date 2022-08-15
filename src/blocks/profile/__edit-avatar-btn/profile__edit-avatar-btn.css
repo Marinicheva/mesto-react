@@ -1,4 +1,4 @@
-.profile__edit-photo-btn {
+.profile__edit-avatar-btn {
   position: absolute;
   top: 0;
   left: 0;
@@ -17,6 +17,6 @@
   transition: opacity .6s;
 }
 
-.profile__photo-container:hover .profile__edit-photo-btn {
+.profile__avatar-container:hover .profile__edit-avatar-btn {
   opacity: 1;
 }

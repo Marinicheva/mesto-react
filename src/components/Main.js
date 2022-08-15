@@ -27,14 +27,14 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__data">
-          <div className="profile__photo-container">
+          <div className="profile__avatar-container">
             <img
               src={userAvatar}
               alt="Фото автора страницы"
-              className="profile__photo"
+              className="profile__avatar"
             />
             <button
-              className="profile__edit-photo-btn"
+              className="profile__edit-avatar-btn"
               type="button"
               onClick={props.onEditAvatar}
             ></button>
