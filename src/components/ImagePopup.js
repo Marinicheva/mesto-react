@@ -7,11 +7,11 @@ function ImagePopup(props) {
     >
       <div className="popup__fullscreen-container">
         <img
-          src={props.card.link}
-          alt={props.card.name}
+          src={props.card ? props.card.link : '#'}
+          alt={props.card ? props.card.name: ''}
           className="popup__img-fullscreen"
         />
-        <h2 className="popup__fullscreen-caption">{props.card.name}</h2>
+        <h2 className="popup__fullscreen-caption">{props.card ? props.card.name: ''}</h2>
         <button
           className="popup__close"
           type="button"
