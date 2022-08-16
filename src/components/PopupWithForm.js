@@ -14,6 +14,9 @@ function PopupWithForm(props) {
           name={`"${props.name}-form"`}
         >
           {props.children}
+          <button className="popup__btn popup__btn-update" type="submit">
+            {props.buttonText}
+          </button>
         </form>
         <button
           className="popup__close"
