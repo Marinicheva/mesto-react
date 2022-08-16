@@ -4,7 +4,7 @@ import Card from "./Card";
 
 function Main(props) {
   const [userName, setUserName] = React.useState("");
-  const [userDescription, setuserDescription] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
 
@@ -12,7 +12,7 @@ function Main(props) {
     Promise.all([api.getUserData(), api.getCards()])
       .then(([userData, cardData]) => {
         setUserName(userData.name);
-        setuserDescription(userData.about);
+        setUserDescription(userData.about);
         setUserAvatar(userData.avatar);
         setCards(cardData);
       })
