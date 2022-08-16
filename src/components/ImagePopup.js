@@ -1,21 +1,21 @@
-function ImagePopup(props) {
+function ImagePopup({ card, onClose }) {
   return (
     <div
       className={`popup popup_type_fullscreen-img ${
-        props.card ? "popup_opened" : ""
+        card ? "popup_opened" : ""
       }`}
     >
       <div className="popup__fullscreen-container">
         <img
-          src={props.card ? props.card.link : '#'}
-          alt={props.card ? props.card.name : ''}
+          src={card ? card.link : "#"}
+          alt={card ? card.name : ""}
           className="popup__img-fullscreen"
         />
-        <h2 className="popup__fullscreen-caption">{props.card ? props.card.name : ''}</h2>
+        <h2 className="popup__fullscreen-caption">{card ? card.name : ""}</h2>
         <button
           className="popup__close"
           type="button"
-          onClick={props.onClose}
+          onClick={onClose}
         ></button>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React from "react";
 import api from "../utils/api";
 import Card from "./Card";
 
-function Main(props) {
+function Main({ onCardClick, onAddPlace, onEditAvatar, onEditProfile }) {
   const [userName, setUserName] = React.useState("");
   const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState("");
@@ -20,7 +20,7 @@ function Main(props) {
   }, []);
 
   const cardItems = cards.map((item) => {
-    return <Card key={item._id} card={item} onCardClick={props.onCardClick} />;
+    return <Card key={item._id} card={item} onCardClick={onCardClick} />;
   });
 
   return (
@@ -36,7 +36,7 @@ function Main(props) {
             <button
               className="profile__edit-avatar-btn"
               type="button"
-              onClick={props.onEditAvatar}
+              onClick={onEditAvatar}
             ></button>
           </div>
           <h1 className="profile__name">{userName}</h1>
@@ -44,7 +44,7 @@ function Main(props) {
             className="profile__edit-btn"
             aria-label="Изменить данные профиля"
             type="button"
-            onClick={props.onEditProfile}
+            onClick={onEditProfile}
           ></button>
           <p className="profile__about">{userDescription}</p>
         </div>
@@ -52,7 +52,7 @@ function Main(props) {
           className="profile__add-btn"
           aria-label="Добавить новое фото"
           type="button"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
 
