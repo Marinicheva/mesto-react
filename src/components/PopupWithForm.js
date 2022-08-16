@@ -7,7 +7,7 @@ function PopupWithForm({ name, title, children, buttonText, isOpen, onClose }) {
           className={`popup__form popup__form_type_${name}`}
           action="#"
           method="POST"
-          name={`"${name}-form"`}
+          name={`${name}-form`}
         >
           {children}
           <button className="popup__btn popup__btn-update" type="submit">
