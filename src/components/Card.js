@@ -1,4 +1,16 @@
+import React from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
 function Card({ card, onCardClick }) {
+
+  const currentUser = React.useContext(CurrentUserContext);
+  const isOwn = card['owner']['_id'] === currentUser['_id'];
+  const isLikedCard = card.likes.some(item => item["_id"] === currentUser['_id']);
+
+  const cardDeleteButtonClassName = `gallery__delete-btn ${isOwn ? '' : 'gallery__delete-btn_hide'}`;
+  const cardLikeButtonClassName = `gallery__like-btn ${isLikedCard ? 'gallery__like-btn_active': ''}`;
+
+  
   const handleCardClick = () => {
     onCardClick(card);
   };
@@ -15,7 +27,7 @@ function Card({ card, onCardClick }) {
         <h2 className="gallery__img-caption">{card.name}</h2>
         <div className="gallery__like-container">
           <button
-            className="gallery__like-btn"
+            className={cardLikeButtonClassName}
             aria-label="Нравится"
             type="button"
           ></button>
@@ -25,7 +37,7 @@ function Card({ card, onCardClick }) {
         </div>
       </div>
       <button
-        className="gallery__delete-btn"
+        className={cardDeleteButtonClassName}
         aria-label="Удалить карточку"
         type="button"
       ></button>

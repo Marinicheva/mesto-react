@@ -15,7 +15,7 @@ class Api {
   }
 
   //Получение данных о пользователе
-  getUserData() {
+  getUserInfo() {
     return fetch(`${this._url}users/me`, {
       method: "GET",
       headers: {
