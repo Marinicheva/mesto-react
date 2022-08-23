@@ -10,13 +10,34 @@ function Main({ onCardClick, onAddPlace, onEditAvatar, onEditProfile }) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getCards()
-      .then(cardData => setCards(cardData))
-      .catch(err => console.error(err));
+    api
+      .getCards()
+      .then((cardData) => setCards(cardData))
+      .catch((err) => console.error(err));
   }, []);
 
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((item) => item._id === currentUser._id);
+
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((card) => (card._id === newCard._id ? newCard : card))
+        );
+      })
+      .catch((err) => console.error(err));
+  };
+
   const cardItems = cards.map((item) => {
-    return <Card key={item._id} card={item} onCardClick={onCardClick} />;
+    return (
+      <Card
+        key={item._id}
+        card={item}
+        onCardClick={onCardClick}
+        onCardLike={handleCardLike}
+      />
+    );
   });
 
   return (

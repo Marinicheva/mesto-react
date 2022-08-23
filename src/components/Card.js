@@ -1,18 +1,24 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick }) {
-
+function Card({ card, onCardClick, onCardLike }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const isOwn = card['owner']['_id'] === currentUser['_id'];
-  const isLikedCard = card.likes.some(item => item["_id"] === currentUser['_id']);
+  const isOwn = card.owner._id === currentUser._id;
+  const isLikedCard = card.likes.some((item) => item._id === currentUser._id);
 
-  const cardDeleteButtonClassName = `gallery__delete-btn ${isOwn ? '' : 'gallery__delete-btn_hide'}`;
-  const cardLikeButtonClassName = `gallery__like-btn ${isLikedCard ? 'gallery__like-btn_active': ''}`;
+  const cardDeleteButtonClassName = `gallery__delete-btn ${
+    isOwn ? "" : "gallery__delete-btn_hide"
+  }`;
+  const cardLikeButtonClassName = `gallery__like-btn ${
+    isLikedCard ? "gallery__like-btn_active" : ""
+  }`;
 
-  
   const handleCardClick = () => {
     onCardClick(card);
+  };
+
+  const handleLikeButtonClick = () => {
+    onCardLike(card);
   };
 
   return (
@@ -30,6 +36,7 @@ function Card({ card, onCardClick }) {
             className={cardLikeButtonClassName}
             aria-label="Нравится"
             type="button"
+            onClick={handleLikeButtonClick}
           ></button>
           <p className="gallery__like-counter">
             {card.likes.length > 0 ? card.likes.length : null}
