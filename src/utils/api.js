@@ -38,6 +38,19 @@ class Api {
     .then(res => this._getResponseData(res, "Данные пользователя не изменены"));
   }
 
+  //Обновление аватара
+  setUserAvatar(avatarData) {
+    return fetch(`${this._url}users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        "authorization": this._token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(avatarData)
+    })
+    .then(res => this._getResponseData(res, "Аватар не обновлен"));
+  }
+
   //Получение карточек с сервера
   getCards() {
     return fetch(`${this._url}cards`, {
