@@ -19,11 +19,23 @@ class Api {
     return fetch(`${this._url}users/me`, {
       method: "GET",
       headers: {
-        authorization: this._token,
+        "authorization": this._token,
       },
     }).then((res) =>
-      this._getResponseData(res, "Данные о пользователе не получены")
-    );
+      this._getResponseData(res, "Данные о пользователе не получены"));
+  }
+
+  //Изменение данных пользователя
+  setUserInfo(data) {
+    return fetch(`${this._url}users/me`, {
+      method: "PATCH",
+      headers: {
+        "authorization": this._token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => this._getResponseData(res, "Данные пользователя не изменены"));
   }
 
   //Получение карточек с сервера
@@ -31,7 +43,7 @@ class Api {
     return fetch(`${this._url}cards`, {
       method: "GET",
       headers: {
-        authorization: this._token,
+        "authorization": this._token,
       },
     }).then((res) =>
       this._getResponseData(res, "Карточки с сервера не пришли")
@@ -43,7 +55,7 @@ class Api {
     return fetch(`${this._url}cards/${cardId}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
       headers: {
-        authorization: this._token,
+        "authorization": this._token,
       },
     }).then((res) => this._getResponseData(res, "Статус лайка не изменен"));
   }

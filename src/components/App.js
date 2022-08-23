@@ -5,6 +5,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import EditProfilePopup from "./EditProfilePopup";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
@@ -37,16 +38,26 @@ function App() {
     setIsAddPlacePopupOpen(true);
   };
 
-  const handleCardClick = (card) => {
-    setSelectedCard(card);
-  };
-
-  const closeAllPopup = () => {
+  const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard(null);
   };
+
+  const handleCardClick = (card) => {
+    setSelectedCard(card);
+  };
+
+  const handleUpdateUser = (data) => {
+    api.setUserInfo(data)
+      .then(newData => {
+        setCurrentUser(newData);
+        closeAllPopups();
+      })
+      .catch(err => console.log(err));
+  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -62,42 +73,17 @@ function App() {
 
         <Footer />
 
-        <PopupWithForm
-          name="edit-profile"
-          title="Редактировать профиль"
-          buttonText="Cохранить"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopup}
-        >
-          <input
-            className="popup__input popup__input-name"
-            type="text"
-            name="name"
-            id="user-name"
-            placeholder="Ваше имя"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span className="popup__input-error user-name-input-error"></span>
-          <input
-            className="popup__input popup__input-about"
-            type="text"
-            name="about"
-            id="user-about"
-            placeholder="Пару слов о Вас"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span className="popup__input-error user-about-input-error"></span>
-        </PopupWithForm>
+          onClose={closeAllPopups} 
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           name="add-place"
           title="Новое место"
           buttonText="Добавить"
-          onClose={closeAllPopup}
+          onClose={closeAllPopups}
           isOpen={isAddPlacePopupOpen}
         >
           <input
@@ -126,14 +112,14 @@ function App() {
           name="delete-card"
           title="Вы уверены?"
           buttonText="Удалить"
-          onClose={closeAllPopup}
+          onClose={closeAllPopups}
         />
 
         <PopupWithForm
           name="edit-avatar"
           title="Обновить аватар"
           buttonText="Обновить"
-          onClose={closeAllPopup}
+          onClose={closeAllPopups}
           isOpen={isEditAvatarPopupOpen}
         >
           <input
@@ -147,7 +133,7 @@ function App() {
           <span className="popup__input-error avatar-link-input-error"></span>
         </PopupWithForm>
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopup} />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </CurrentUserContext.Provider>
   );
