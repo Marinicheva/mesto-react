@@ -47,6 +47,17 @@ class Api {
       },
     }).then((res) => this._getResponseData(res, "Статус лайка не изменен"));
   }
+
+  //Удаление карточки
+  deleteCard(cardId) {
+    return fetch(`${this._url}cards/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        "authorization": this._token,
+      }
+    })
+    .then(res => this._getResponseData(res, "Карточка не удалена"));
+  }
 }
 
 const api = new Api(API_URL, TOKEN);

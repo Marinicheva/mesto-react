@@ -29,6 +29,12 @@ function Main({ onCardClick, onAddPlace, onEditAvatar, onEditProfile }) {
       .catch((err) => console.error(err));
   };
 
+  const handleCardDelete = (card) => {
+    api.deleteCard(card._id).then(() => {
+      setCards((state) => state.filter(item => item._id !== card._id));
+    });
+  };
+
   const cardItems = cards.map((item) => {
     return (
       <Card
@@ -36,6 +42,7 @@ function Main({ onCardClick, onAddPlace, onEditAvatar, onEditProfile }) {
         card={item}
         onCardClick={onCardClick}
         onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
       />
     );
   });
