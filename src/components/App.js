@@ -1,7 +1,7 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api";
 
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -60,6 +60,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsDeleteCardPopupOpen(false);
     setSelectedCard(null);
+    setDeletedCard(null);
   };
 
   //Рендер загрузки
@@ -177,7 +178,11 @@ function App() {
           onDeleteCard={handleCardDelete}
         />
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup 
+          card={selectedCard}
+          onClose={closeAllPopups} 
+        />
+        
       </div>
     </CurrentUserContext.Provider>
   );

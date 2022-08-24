@@ -1,43 +1,41 @@
-import React from "react";
+import { useState, useEffect, useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-function EditProfilePopup(
-  {
-    isOpen, 
-    onClose, 
-    onUpdateUser, 
-    isRenderLoading, 
-    renderLoading, 
-    renderLoadingButtonText
-  }) {
-    
-  const currentUser = React.useContext(CurrentUserContext);
+function EditProfilePopup({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  isRenderLoading,
+  renderLoading,
+  renderLoadingButtonText,
+}) {
+  const currentUser = useContext(CurrentUserContext);
 
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
-  React.useEffect(() => {
-    if ( currentUser.name && currentUser.about ) {
+  useEffect(() => {
+    if (currentUser.name && currentUser.about) {
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
-  }, [currentUser]); 
+  }, [currentUser]);
 
   const handleChangeName = (evt) => {
     setName(evt.target.value);
-  }
+  };
 
   const handleChangeDescription = (evt) => {
     setDescription(evt.target.value);
-  }
+  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     renderLoading();
-    onUpdateUser({name, about: description});
-  } 
+    onUpdateUser({ name, about: description });
+  };
 
   return (
     <PopupWithForm

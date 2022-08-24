@@ -1,21 +1,19 @@
 import PopupWithForm from "./PopupWithForm";
 
-function DeleteCardPopup(
-  {
-    isOpen,
-    onClose,
-    onDeleteCard,
-    isRenderLoading,
-    renderLoading
-  }) {
+function DeleteCardPopup({
+  isOpen,
+  onClose,
+  onDeleteCard,
+  isRenderLoading,
+  renderLoading,
+}) {
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    renderLoading();
+    onDeleteCard();
+  };
 
-    const handleSubmit = (evt) => {
-      evt.preventDefault();
-      renderLoading();
-      onDeleteCard();
-    }
-
-  return(
+  return (
     <PopupWithForm
       name="delete-card"
       title="Вы уверены?"
