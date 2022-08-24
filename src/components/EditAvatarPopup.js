@@ -1,11 +1,21 @@
 import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
+function EditAvatarPopup(
+  {
+    isOpen,
+    onClose,
+    onUpdateAvatar,
+    isRenderLoading, 
+    renderLoading, 
+    renderLoadingButtonText
+  }) {
+
   const avatarInput = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    renderLoading();
 
     onUpdateAvatar({
       avatar: avatarInput.current.value,
@@ -21,6 +31,8 @@ function EditAvatarPopup({isOpen, onClose, onUpdateAvatar}) {
           buttonText="Обновить"
           onClose={onClose}
           isOpen={isOpen}
+          isRenderLoading={isRenderLoading}
+          renderLoadingButtonText={renderLoadingButtonText}
           onSubmit={handleSubmit}
         >
           <input

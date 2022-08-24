@@ -1,4 +1,18 @@
-function PopupWithForm({ name, title, children, buttonText, isOpen, onClose, onSubmit }) {
+function PopupWithForm(
+  { 
+    name, 
+    title, 
+    children, 
+    buttonText, 
+    isOpen, 
+    isRenderLoading, 
+    renderLoadingButtonText, 
+    onClose, 
+    onSubmit
+  }) {
+
+  const submitButtonClassName = `popup__btn ${isRenderLoading ? 'popup__btn_inactive' : ''}`
+
   return (
     <div className={`popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`}>
       <div className="popup__container">
@@ -11,8 +25,8 @@ function PopupWithForm({ name, title, children, buttonText, isOpen, onClose, onS
           onSubmit={onSubmit}
         >
           {children}
-          <button className="popup__btn popup__btn-update" type="submit">
-            {buttonText}
+          <button className={submitButtonClassName} type="submit" disabled={isRenderLoading}>
+            {isRenderLoading ? renderLoadingButtonText : buttonText}
           </button>
         </form>
         <button

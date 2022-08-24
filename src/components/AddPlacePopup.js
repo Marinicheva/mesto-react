@@ -1,14 +1,23 @@
 import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup({isOpen, onClose, onAddNewCard}) {
+function AddPlacePopup(
+  {
+    isOpen,
+    onClose,
+    onAddNewCard,
+    isRenderLoading, 
+    renderLoading, 
+    renderLoadingButtonText
+  }) {
 
   const defaultState = {name: '', link: ''};
   const [newCard, setNewCard] = useState(defaultState);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
+    
+    renderLoading();
     onAddNewCard(newCard);
     setNewCard(defaultState);
   }
@@ -24,6 +33,8 @@ function AddPlacePopup({isOpen, onClose, onAddNewCard}) {
       buttonText="Добавить"
       onClose={onClose}
       isOpen={isOpen}
+      isRenderLoading={isRenderLoading}
+      renderLoadingButtonText={renderLoadingButtonText}
       onSubmit={handleSubmit}
     >
       <input
