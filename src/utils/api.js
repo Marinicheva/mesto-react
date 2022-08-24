@@ -52,7 +52,7 @@ class Api {
   }
 
   //Получение карточек с сервера
-  getCards() {
+  getCardList() {
     return fetch(`${this._url}cards`, {
       method: "GET",
       headers: {
@@ -83,8 +83,20 @@ class Api {
     })
     .then(res => this._getResponseData(res, "Карточка не удалена"));
   }
+
+  //Добавление новой карточки
+addNewCard(newCardData) {
+  return fetch(`${this._url}cards`, {
+    method: "POST",
+    headers: {
+      "authorization": this._token,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newCardData)
+  })
+  .then(res => this._getResponseData(res, "Карточка не добавлена"));
+}
 }
 
 const api = new Api(API_URL, TOKEN);
-
 export default api;
