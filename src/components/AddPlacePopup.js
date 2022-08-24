@@ -19,6 +19,7 @@ function AddPlacePopup(
     
     renderLoading();
     onAddNewCard(newCard);
+    
     setNewCard(defaultState);
   }
 

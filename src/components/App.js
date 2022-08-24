@@ -1,4 +1,4 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import api from "../utils/api";
 
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -8,28 +8,29 @@ import Footer from "./Footer";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import PopupWithForm from "./PopupWithForm";
+import DeleteCardPopup from "./DeleteCardPopup";
 import ImagePopup from "./ImagePopup";
 
 function App() {
   //Стейты
-  const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = useState({});
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
 
-  const [cards, setCards] = React.useState([]);
-  const [selectedCard, setSelectedCard] = React.useState(null);
-  
-  const [isRenderLoading, setIsRenderLoading] = React.useState(false);
+  const [cards, setCards] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
+  const [deletedCard, setDeletedCard] = useState("");
 
+  const [isRenderLoading, setIsRenderLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.all([api.getCardList(), api.getUserInfo()])
       .then(([cardsData, userData]) => {
         setCards(cardsData);
-        setCurrentUser(userData)
+        setCurrentUser(userData);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -47,18 +48,24 @@ function App() {
     setIsAddPlacePopupOpen(true);
   };
 
+  const handleDeleteCardClick = (card) => {
+    setIsDeleteCardPopupOpen(true);
+    setDeletedCard(card);
+  };
+
   //Закрытие попапов
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setIsDeleteCardPopupOpen(false);
     setSelectedCard(null);
   };
 
   //Рендер загрузки
   const renderLoading = () => {
-    setIsRenderLoading(isRenderLoading => !isRenderLoading);
-  }
+    setIsRenderLoading((isRenderLoading) => !isRenderLoading);
+  };
 
   //Действия с карточками (просмотр, лайк, удаление, добавление)
   const handleCardClick = (card) => {
@@ -77,43 +84,52 @@ function App() {
       .catch((err) => console.error(err));
   };
 
-  const handleCardDelete = (card) => {
-    api.deleteCard(card._id).then(() => {
-      setCards((state) => state.filter(item => item._id !== card._id));
-    });
+  const handleCardDelete = () => {
+    api
+      .deleteCard(deletedCard._id)
+      .then(() => {
+        setCards((state) =>
+          state.filter((item) => item._id !== deletedCard._id)
+        );
+      })
+      .then(() => closeAllPopups())
+      .catch((err) => console.log(err))
+      .finally(() => renderLoading());
   };
 
   const handleAddPlaceSubmit = (cardData) => {
-    api.addNewCard(cardData)
-      .then(data => setCards([data, ...cards]))
+    api
+      .addNewCard(cardData)
+      .then((data) => setCards([data, ...cards]))
       .then(() => closeAllPopups())
-      .then(() => renderLoading())
-      .catch(err => console.error(err));
-  }
+      .catch((err) => console.error(err))
+      .finally(() => renderLoading());
+  };
 
   //Изменение данных пользователя (данные, аватар)
   const handleUpdateUser = (data) => {
-    api.setUserInfo(data)
-      .then(newData => setCurrentUser(newData))
+    api
+      .setUserInfo(data)
+      .then((newData) => setCurrentUser(newData))
       .then(() => closeAllPopups())
-      .then(() => renderLoading())
-      .catch(err => console.log(err));
-  }
-
-  const handleUpdateAvatar = (avatarData) => {
-    api.setUserAvatar(avatarData)
-      .then(newData => setCurrentUser(newData))
-      .then(() => closeAllPopups())
-      .then(() => renderLoading())
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => renderLoading());
   };
 
+  const handleUpdateAvatar = (avatarData) => {
+    api
+      .setUserAvatar(avatarData)
+      .then((newData) => setCurrentUser(newData))
+      .then(() => closeAllPopups())
+      .catch((err) => console.log(err))
+      .finally(() => renderLoading());
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <Header />
-        
+
         <Main
           cards={cards}
           onEditProfile={handleEditProfileClick}
@@ -121,18 +137,18 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleDeleteCardClick}
         />
 
         <Footer />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups} 
+          onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={'Сохранение...'}
+          renderLoadingButtonText={"Сохранение..."}
         />
 
         <EditAvatarPopup
@@ -141,26 +157,24 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={'Обновление...'}
+          renderLoadingButtonText={"Обновление..."}
         />
 
-        <AddPlacePopup 
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddNewCard={handleAddPlaceSubmit}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={'Добавление...'}
+          renderLoadingButtonText={"Добавление..."}
         />
 
-        <PopupWithForm
-          name="delete-card"
-          title="Вы уверены?"
-          buttonText="Удалить"
+        <DeleteCardPopup
+          isOpen={isDeleteCardPopupOpen}
           onClose={closeAllPopups}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={'Удаление...'}
+          onDeleteCard={handleCardDelete}
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
