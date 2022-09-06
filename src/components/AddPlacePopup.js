@@ -1,5 +1,5 @@
-import { useState } from "react";
-import PopupWithForm from "./PopupWithForm";
+import { useState } from 'react';
+import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({
   isOpen,
@@ -9,7 +9,7 @@ function AddPlacePopup({
   renderLoading,
   renderLoadingButtonText,
 }) {
-  const defaultState = { name: "", link: "" };
+  const defaultState = { name: '', link: '' };
   const [newCard, setNewCard] = useState(defaultState);
 
   const handleSubmit = (evt) => {

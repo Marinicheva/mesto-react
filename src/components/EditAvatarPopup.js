@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import PopupWithForm from "./PopupWithForm";
+import { useRef } from 'react';
+import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup({
   isOpen,
@@ -19,7 +19,7 @@ function EditAvatarPopup({
       avatar: avatarInput.current.value,
     });
 
-    avatarInput.current.value = "";
+    avatarInput.current.value = '';
   };
 
   return (

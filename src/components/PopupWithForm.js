@@ -11,8 +11,8 @@ function PopupWithForm(
     onSubmit
   }) {
 
-  const popupClassName = `popup popup_type_${name} ${isOpen ? "popup_opened" : ""}`;
-  const submitButtonClassName = `popup__btn ${isRenderLoading ? 'popup__btn_inactive' : ''}`
+  const popupClassName = `popup popup_type_${name} ${isOpen ? 'popup_opened' : ''}`;
+  const submitButtonClassName = `popup__btn ${isRenderLoading ? 'popup__btn_inactive' : ''}`;
 
   return (
     <div className={popupClassName}>

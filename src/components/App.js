@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import api from "../utils/api";
+import { useState, useEffect } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import api from '../utils/api';
 
-import Header from "./Header";
-import Main from "./Main";
-import Footer from "./Footer";
-import EditProfilePopup from "./EditProfilePopup";
-import EditAvatarPopup from "./EditAvatarPopup";
-import AddPlacePopup from "./AddPlacePopup";
-import DeleteCardPopup from "./DeleteCardPopup";
-import ImagePopup from "./ImagePopup";
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
+import DeleteCardPopup from './DeleteCardPopup';
+import ImagePopup from './ImagePopup';
 
 function App() {
   //Стейты
@@ -22,7 +22,7 @@ function App() {
 
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState(null);
-  const [deletedCard, setDeletedCard] = useState("");
+  const [deletedCard, setDeletedCard] = useState('');
 
   const [isRenderLoading, setIsRenderLoading] = useState(false);
 
@@ -149,7 +149,7 @@ function App() {
           onUpdateUser={handleUpdateUser}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={"Сохранение..."}
+          renderLoadingButtonText={'Сохранение...'}
         />
 
         <EditAvatarPopup
@@ -158,7 +158,7 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={"Обновление..."}
+          renderLoadingButtonText={'Обновление...'}
         />
 
         <AddPlacePopup
@@ -167,7 +167,7 @@ function App() {
           onAddNewCard={handleAddPlaceSubmit}
           isRenderLoading={isRenderLoading}
           renderLoading={renderLoading}
-          renderLoadingButtonText={"Добавление..."}
+          renderLoadingButtonText={'Добавление...'}
         />
 
         <DeleteCardPopup

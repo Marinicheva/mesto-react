@@ -1,4 +1,4 @@
-import PopupWithForm from "./PopupWithForm";
+import PopupWithForm from './PopupWithForm';
 
 function DeleteCardPopup({
   isOpen,
@@ -21,7 +21,7 @@ function DeleteCardPopup({
       isOpen={isOpen}
       onClose={onClose}
       isRenderLoading={isRenderLoading}
-      renderLoadingButtonText={"Удаление..."}
+      renderLoadingButtonText={'Удаление...'}
       onSubmit={handleSubmit}
     />
   );

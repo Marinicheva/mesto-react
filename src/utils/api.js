@@ -1,4 +1,4 @@
-import { API_URL, TOKEN } from "./utils";
+import { API_URL, TOKEN } from './utils';
 
 class Api {
   constructor(url, token) {
@@ -17,85 +17,85 @@ class Api {
   //Получение данных о пользователе
   getUserInfo() {
     return fetch(`${this._url}users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "authorization": this._token,
+        'authorization': this._token,
       },
     }).then((res) =>
-      this._getResponseData(res, "Данные о пользователе не получены"));
+      this._getResponseData(res, 'Данные о пользователе не получены'));
   }
 
   //Изменение данных пользователя
   setUserInfo(data) {
     return fetch(`${this._url}users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "authorization": this._token,
-        "Content-Type": "application/json",
+        'authorization': this._token,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
     })
-    .then(res => this._getResponseData(res, "Данные пользователя не изменены"));
+      .then(res => this._getResponseData(res, 'Данные пользователя не изменены'));
   }
 
   //Обновление аватара
   setUserAvatar(avatarData) {
     return fetch(`${this._url}users/me/avatar`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "authorization": this._token,
-        "Content-Type": "application/json",
+        'authorization': this._token,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(avatarData)
     })
-    .then(res => this._getResponseData(res, "Аватар не обновлен"));
+      .then(res => this._getResponseData(res, 'Аватар не обновлен'));
   }
 
   //Получение карточек с сервера
   getCardList() {
     return fetch(`${this._url}cards`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "authorization": this._token,
+        'authorization': this._token,
       },
     }).then((res) =>
-      this._getResponseData(res, "Карточки с сервера не пришли")
+      this._getResponseData(res, 'Карточки с сервера не пришли')
     );
   }
 
   //Изменить статус лайка карточки
   changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._url}cards/${cardId}/likes`, {
-      method: isLiked ? "DELETE" : "PUT",
+      method: isLiked ? 'DELETE' : 'PUT',
       headers: {
-        "authorization": this._token,
+        'authorization': this._token,
       },
-    }).then((res) => this._getResponseData(res, "Статус лайка не изменен"));
+    }).then((res) => this._getResponseData(res, 'Статус лайка не изменен'));
   }
 
   //Удаление карточки
   deleteCard(cardId) {
     return fetch(`${this._url}cards/${cardId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "authorization": this._token,
+        'authorization': this._token,
       }
     })
-    .then(res => this._getResponseData(res, "Карточка не удалена"));
+      .then(res => this._getResponseData(res, 'Карточка не удалена'));
   }
 
   //Добавление новой карточки
-addNewCard(newCardData) {
-  return fetch(`${this._url}cards`, {
-    method: "POST",
-    headers: {
-      "authorization": this._token,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(newCardData)
-  })
-  .then(res => this._getResponseData(res, "Карточка не добавлена"));
-}
+  addNewCard(newCardData) {
+    return fetch(`${this._url}cards`, {
+      method: 'POST',
+      headers: {
+        'authorization': this._token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newCardData)
+    })
+      .then(res => this._getResponseData(res, 'Карточка не добавлена'));
+  }
 }
 
 const api = new Api(API_URL, TOKEN);

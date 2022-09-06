@@ -1,0 +1,23 @@
+{
+  "extends": [
+    "react-app",
+    "react-app/jest"
+  ],
+  "rules": {
+    "quotes": ["warn", "single"],
+    "camelcase": "warn",
+    "no-extra-semi": "error",
+    "prefer-const": "error",
+    "indent": ["warn", 2],
+    "no-unused-expressions": "error",
+    "no-useless-constructor": "error",
+    "no-duplicate-imports": "error",
+    "dot-notation": "warn",
+    "no-mixed-spaces-and-tabs": "error",
+    "no-multi-spaces": "error",
+    "semi": "error",
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-empty": "error"
+  }
+}
